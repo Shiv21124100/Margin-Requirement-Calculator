@@ -26,12 +26,12 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
-  // Use environment variable or default to relative path for Vercel
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "";
+  // Use local Next.js API routes (empty string relative path)
+  const API_URL = "";
 
   // Fetch config on load
   useEffect(() => {
-    fetch("http://localhost:8080/config/assets")
+    fetch(`${API_URL}/api/config/assets`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch assets");
         return res.json();
@@ -78,7 +78,7 @@ export default function Home() {
     setValidationResult(null);
 
     try {
-      const response = await fetch(`${API_URL}/margin/validate`, {
+      const response = await fetch(`${API_URL}/api/margin/validate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
